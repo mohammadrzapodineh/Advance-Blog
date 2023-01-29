@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        Last posts
+    </h1>
+    {% for post in posts %}
+    <div>
+        <a href="{{ post.get_absloute_url }}"><h2>Title:{{ post.title }}</h2></a>
+        <a href="{% url 'blog:update_view' post.id %}">
+            <h5>Update</h5>
+            
+        </a>
+        <a href="{% url 'blog:post_delete' post.id %}">
+            <h6>Delete</h6>
+        </a>
+        <p>
+            {{ post.content|safe }}
+        </p>
+    </div>
+    
+    {% endfor %}
+    {% if is_paginated %}
+    <div class="pagination">
+        <span class="step-links">
+            {% for page in page_obj.paginator.page_range  %}
+            <a href="?page={{ page }}">{{ page }}</a>
+            {% endfor %}
+        </span>
+    </div>
+    {% endif %}
+</body>
+</html>
